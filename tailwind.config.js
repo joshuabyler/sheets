@@ -19,6 +19,11 @@ module.exports = {
           '2xl': '1124px',
         },
       },
+      aspectRatio: {
+        auto: 'auto',
+        square: '1 / 1',
+        video: '16 / 9'
+      }
     },
   },
 

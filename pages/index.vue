@@ -9,12 +9,30 @@ await store.getSheet();
 
 const headings = ref(null)
 const result = ref();
+const search = ref('');
 
 onMounted(async () => {
   headings.value = store.sheets.data.values[0]
   result.value = [...store.sheets.data.values]
   result.value.splice(0,1)
 })
+
+function lookup(key: string) {
+  console.log('search');
+  console.log(key);
+  console.log(search.value);
+}
+
+function showMedium() {
+  store.getMedium();
+  result.value = [...store.visible]
+}
+
+async function reset() {
+  await store.reset();
+  result.value = [...store.sheets.data.values]
+  result.value.splice(0,1)
+}
 </script>
 <!-- pages/index.vue -->
 <template>
@@ -26,6 +44,9 @@ onMounted(async () => {
         <div
             class="mb-16 flex flex-col items-center text-center md:mb-0 md:w-1/2 md:items-start md:pr-16 md:text-left lg:flex-grow lg:pr-24"
         >
+          <UInput color="primary" variant="outline" placeholder="Search..." @keyup="lookup" v-model="search" />
+          <a @click="showMedium">Medium</a>
+          <a @click="reset">Reset</a>
           <table>
             <thead>
             <tr>
@@ -39,7 +60,9 @@ onMounted(async () => {
               <td>{{col[1]}}</td>
               <td>{{col[2]}}</td>
               <td>{{col[3]}}</td>
-              <td> <NuxtLink :to="`/${col[0]}`">View</NuxtLink> </td>
+              <td>{{col[4]}}</td>
+              <td>{{col[5]}}</td>
+              <td>{{col[6]}}</td>
             </tr>
             </tbody>
           </table>
