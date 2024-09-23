@@ -1,8 +1,20 @@
 <script setup lang="ts">
 import { useStore } from '@/stores'
+import {onMounted} from "vue";
 
 // access the `store` variable anywhere in the component ✨
-const store = await useStore().getSheet()
+// const sheet = await useStore().getSheet()
+const store = useStore();
+await store.getSheet();
+
+const headings = ref(null)
+const result = ref();
+
+onMounted(async () => {
+  headings.value = store.sheets.data.values[0]
+  result.value = [...store.sheets.data.values]
+  result.value.splice(0,1)
+})
 </script>
 <!-- pages/index.vue -->
 <template>
@@ -14,10 +26,23 @@ const store = await useStore().getSheet()
         <div
             class="mb-16 flex flex-col items-center text-center md:mb-0 md:w-1/2 md:items-start md:pr-16 md:text-left lg:flex-grow lg:pr-24"
         >
-          <h1 class="title-font mb-4 text-3xl font-medium text-white sm:text-4xl">
-           aaa
-          </h1>
-          <p class="mb-8 leading-relaxed">This project is a Vue.js application using Nuxt 3.</p>
+          <table>
+            <thead>
+            <tr>
+              <th v-for="col in headings" :key="col" v-html="col"></th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="col in result" :key="col" >
+              <td>{{col[0]}}</td>
+              <td>{{col[1]}}</td>
+              <td>{{col[2]}}</td>
+              <td>{{col[3]}}</td>
+              <td> <NuxtLink :to="`/${col[0]}`">View</NuxtLink> </td>
+            </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
