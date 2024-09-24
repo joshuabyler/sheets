@@ -1,5 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  app: {
+    baseURL: 'https://joshuabyler.github.io/sheets/'
+  },
   devtools: { enabled: true },
   css: ['@/assets/css/tailwind.css'],
   compatibilityDate: '2024-04-03',
