@@ -6,6 +6,12 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['@/assets/css/tailwind.css'],
   compatibilityDate: '2024-04-03',
+  nitro: {
+    prerender: {
+      crawlLinks: false,
+      failOnError: false
+    },
+  },
   modules: ['@pinia/nuxt', '@nuxt/ui'],
   runtimeConfig: {
     public: {
