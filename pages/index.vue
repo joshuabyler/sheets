@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useStore } from '@/stores'
-import {onMounted} from "vue";
+import { onMounted } from "vue";
 
 // access the `store` variable anywhere in the component ✨
 // const sheet = await useStore().getSheet()
@@ -9,8 +9,6 @@ await store.getSheet();
 
 const headings = ref()
 const result = ref();
-const search = ref('');
-const loading = ref(true);
 
 onMounted(async () => {
   headings.value = store.sheets.data.values[0].map((heading: string) => {
@@ -21,27 +19,8 @@ onMounted(async () => {
   })
   result.value = [...store.sheets.data.values]
   result.value.splice(0,1)
-  loading.value = false;
 })
 
-function lookup(key: string) {
-  console.log('search');
-  console.log(key);
-  console.log(search.value);
-}
-
-function showMedium() {
-  store.getMedium();
-  result.value = [...store.visible]
-}
-
-async function reset() {
-  loading.value = true;
-  await store.reset();
-  result.value = [...store.sheets.data.values]
-  result.value.splice(0,1)
-  loading.value = false;
-}
 </script>
 <!-- pages/index.vue -->
 <template>
@@ -53,12 +32,8 @@ async function reset() {
         <div
             class="mb-16 flex flex-col items-center text-center md:mb-0 md:w-1/2 md:items-start md:pr-16 md:text-left lg:flex-grow lg:pr-24"
         >
-          <UInput color="primary" variant="outline" placeholder="Search..." @keyup="lookup" v-model="search" />
-          <UButton @click="showMedium">Medium</UButton>
-          <UButton @click="reset">Reset</UButton>
-          <UTable
-                  :columns="headings"
-                  :rows="store.formattedData"></UTable>
+          <Filter/>
+          <UTable :columns="headings" :rows="store.formattedData"></UTable>
         </div>
       </div>
     </section>
