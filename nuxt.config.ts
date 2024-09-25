@@ -11,6 +11,7 @@ export default defineNuxtConfig({
       crawlLinks: false,
       failOnError: false
     },
+    preset: "github-pages",
   },
   modules: ['@pinia/nuxt', '@nuxt/ui'],
   runtimeConfig: {
