@@ -8,18 +8,24 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   nitro: {
     prerender: {
+      concurrency: 1000,
+      interval: 1000,
       crawlLinks: false,
-      failOnError: false
+      failOnError: true
     },
     preset: "github-pages",
   },
   modules: ['@pinia/nuxt', '@nuxt/ui'],
+  routeRules: {
+    "/": { prerender: true },
+  },
   runtimeConfig: {
     public: {
       GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
       SPREAD_SHEET_ID: process.env.SPREAD_SHEET_ID
     }
   },
+  ssr: true,
   ui: {
     global: true
   }
