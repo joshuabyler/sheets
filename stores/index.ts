@@ -24,16 +24,16 @@ export const useStore = defineStore('main', () => {
          * i picture this going
          * let's get rid of a loop and make it manual first then figure out the first loop
          */
-        const leaName = [];
-        const code = [];
-        const wards = [];
+        // const leaName = [];
+        // const code = [];
+        // const wards = [];
 
         // might want to go through each header and list all of its options
-        sheets.value.data.values.forEach((value: Array<any>, index: number) => {
-            if (index === 1) {
-                console.log(value);
-            }
-        })
+        // sheets.value.data.values.forEach((value: Array<any>, index: number) => {
+        //     if (index === 1) {
+        //         console.log(value);
+        //     }
+        // })
     }
 
     async function getSheet() {
