@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia';
+import { ref } from 'vue';
+import { useFetch } from '#app';
 
 export const useStore = defineStore('main', () => {
     const filterOptions = ref();
@@ -6,11 +8,13 @@ export const useStore = defineStore('main', () => {
     const sheets = ref();
     const visible = ref();
 
-    function formatData() {
+    const formatData = () => {
         const headers = sheets.value.data.values[0];
-        formattedData.value = sheets.value.data.values.map((item: Array<any>, idx: number) => {
+        formattedData.value = sheets.value.data.values.map((item: Array<never>, idx: number) => {
             if (idx !== 0) {
-                return Object.fromEntries(item.map((value: string, index: number) => [headers[index], value]));
+                return Object.fromEntries(
+                    item.map((value: string, index: number) => [headers[index], value])
+                );
             }
             return item;
         });
@@ -34,22 +38,22 @@ export const useStore = defineStore('main', () => {
         //         console.log(value);
         //     }
         // })
-    }
+    };
 
-    async function getSheet() {
+    const getSheet = async () => {
         const { data } = await useFetch('/api/sheets');
         sheets.value = data.value;
         visible.value = data.value;
-        formatData()
-    }
+        formatData();
+    };
 
-    function getMedium() {
-        visible.value = visible.value.data.values.filter((item: string) => item[4] === 'M')
-    }
+    const getMedium = () => {
+        visible.value = visible.value.data.values.filter((item: string) => item[4] === 'M');
+    };
 
-    async function reset() {
-        visible.value = sheets.value
-    }
+    const reset = async () => {
+        visible.value = sheets.value;
+    };
 
-    return { filterOptions, formattedData, getMedium, getSheet, reset, sheets, visible, }
-})
+    return { filterOptions, formattedData, getMedium, getSheet, reset, sheets, visible };
+});
