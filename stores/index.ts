@@ -7,6 +7,32 @@ export const useStore = defineStore('main', () => {
     const formattedData = ref();
     const sheets = ref();
     const visible = ref();
+    const leaName = ref([]);
+    const code = ref([]);
+    const wards = ref([]);
+    const levels = ref([]);
+    const gradeBands = ref([]);
+    const siteType = ref([]);
+    const enrollmentCap = ref([]);
+    const leaEnrollment = ref([]);
+    const reviewRenewal = ref([]);
+    const edName = ref([]);
+    const edEmail = ref([]);
+    const officeNumber = ref([]);
+    const leadOfColor = ref([]);
+    const website = ref([]);
+    const leaOffice = ref([]);
+    const leaApprovalyear = ref([]);
+    const newLeader = ref([]);
+    const alternative = ref([]);
+    const residential = ref([]);
+
+    const filterData = (item: object) => {
+        formatData();
+        const noFirstRow = formattedData.value;
+        noFirstRow.shift();
+        formattedData.value = noFirstRow.filter((thing: object) => thing.LEA_Name === item);
+    };
 
     const formatData = () => {
         const headers = sheets.value.data.values[0];
@@ -28,16 +54,29 @@ export const useStore = defineStore('main', () => {
          * i picture this going
          * let's get rid of a loop and make it manual first then figure out the first loop
          */
-        // const leaName = [];
-        // const code = [];
-        // const wards = [];
-
         // might want to go through each header and list all of its options
-        // sheets.value.data.values.forEach((value: Array<any>, index: number) => {
-        //     if (index === 1) {
-        //         console.log(value);
-        //     }
-        // })
+        sheets.value.data.values.forEach((value: Array<never>) => {
+            leaName.value.push(value[0]);
+            code.value.push(value[1]);
+            wards.value.push(value[2]);
+            levels.value.push(value[3]);
+            gradeBands.value.push(value[4]);
+            siteType.value.push(value[5]);
+            enrollmentCap.value.push(value[6]);
+            leaEnrollment.value.push(value[7]);
+            reviewRenewal.value.push(value[8]);
+            edName.value.push(value[9]);
+            edEmail.value.push(value[10]);
+            officeNumber.value.push(value[11]);
+            enrollmentCap.value.push(value[12]);
+            leadOfColor.value.push(value[13]);
+            website.value.push(value[14]);
+            leaOffice.value.push(value[15]);
+            leaApprovalyear.value.push(value[16]);
+            newLeader.value.push(value[17]);
+            alternative.value.push(value[18]);
+            residential.value.push(value[19]);
+        });
     };
 
     const getSheet = async () => {
@@ -55,5 +94,15 @@ export const useStore = defineStore('main', () => {
         visible.value = sheets.value;
     };
 
-    return { filterOptions, formattedData, getMedium, getSheet, reset, sheets, visible };
+    return {
+        filterData,
+        filterOptions,
+        formattedData,
+        getMedium,
+        getSheet,
+        leaName,
+        reset,
+        sheets,
+        visible
+    };
 });

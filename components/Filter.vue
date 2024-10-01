@@ -5,6 +5,7 @@ const store = useStore();
 const search = ref('');
 const result = ref();
 const filterOption = ref();
+const leaOptions = ref();
 
 const lookup = (key: string) => {
     console.log('search');
@@ -27,6 +28,12 @@ const handleChange = (e: Event) => {
     console.log('handle change');
     console.log(e);
 };
+
+const handleLeaChange = (e: Event) => {
+    console.log('handle lea change');
+    console.log(e);
+    store.filterData(e);
+};
 </script>
 
 <template>
@@ -46,6 +53,11 @@ const handleChange = (e: Event) => {
             <span>Select</span>
             <USelect v-model="filterOption" :options="store.filterOptions" @change="handleChange" />
             <span>Where</span>
+            <USelect
+                v-model="leaOptions"
+                :options="store.leaName"
+                @change="handleLeaChange"
+            ></USelect>
         </div>
     </div>
 </template>
