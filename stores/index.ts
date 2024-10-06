@@ -3,35 +3,36 @@ import { ref } from 'vue';
 import { useFetch } from '#app';
 
 export const useStore = defineStore('main', () => {
+    const alternative = ref([]);
+    const code = ref([]);
+    const edEmail = ref([]);
+    const edName = ref([]);
+    const enrollmentCap = ref([]);
     const filterOptions = ref();
     const formattedData = ref();
-    const sheets = ref();
-    const visible = ref();
-    const leaName = ref([]);
-    const code = ref([]);
-    const wards = ref([]);
-    const levels = ref([]);
     const gradeBands = ref([]);
-    const siteType = ref([]);
-    const enrollmentCap = ref([]);
-    const leaEnrollment = ref([]);
-    const reviewRenewal = ref([]);
-    const edName = ref([]);
-    const edEmail = ref([]);
-    const officeNumber = ref([]);
-    const leadOfColor = ref([]);
-    const website = ref([]);
-    const leaOffice = ref([]);
     const leaApprovalyear = ref([]);
+    const leaEnrollment = ref([]);
+    const leaName = ref([]);
+    const leaOffice = ref([]);
+    const levels = ref([]);
     const newLeader = ref([]);
-    const alternative = ref([]);
+    const officeNumber = ref([]);
     const residential = ref([]);
+    const reviewRenewal = ref([]);
+    const sheets = ref();
+    const siteType = ref([]);
+    const visible = ref();
+    const wards = ref([]);
+    const website = ref([]);
 
     const filterData = (item: object) => {
         formatData();
         const noFirstRow = formattedData.value;
         noFirstRow.shift();
-        formattedData.value = noFirstRow.filter((thing: object) => thing.LEA_Name === item);
+        formattedData.value = noFirstRow.filter(
+            (thing: object) => thing[item.column] === item.value
+        );
     };
 
     const formatData = () => {
@@ -54,8 +55,10 @@ export const useStore = defineStore('main', () => {
          * i picture this going
          * let's get rid of a loop and make it manual first then figure out the first loop
          */
+
         // might want to go through each header and list all of its options
         sheets.value.data.values.forEach((value: Array<never>) => {
+            console.log(value);
             leaName.value.push(value[0]);
             code.value.push(value[1]);
             wards.value.push(value[2]);
@@ -69,7 +72,7 @@ export const useStore = defineStore('main', () => {
             edEmail.value.push(value[10]);
             officeNumber.value.push(value[11]);
             enrollmentCap.value.push(value[12]);
-            leadOfColor.value.push(value[13]);
+            leaEnrollment.value.push(value[13]);
             website.value.push(value[14]);
             leaOffice.value.push(value[15]);
             leaApprovalyear.value.push(value[16]);
@@ -86,10 +89,6 @@ export const useStore = defineStore('main', () => {
         formatData();
     };
 
-    const getMedium = () => {
-        visible.value = visible.value.data.values.filter((item: string) => item[4] === 'M');
-    };
-
     const reset = async () => {
         visible.value = sheets.value;
     };
@@ -98,7 +97,7 @@ export const useStore = defineStore('main', () => {
         filterData,
         filterOptions,
         formattedData,
-        getMedium,
+        formatData,
         getSheet,
         leaName,
         reset,

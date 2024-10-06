@@ -2,22 +2,20 @@
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
+## Requirements
+
+1. You will need node v18 you should use [nvm](https://github.com/nvm-sh/nvm)
+2. You will need [yarn](https://yarnpkg.com/getting-started/install)
+3. You'll also need to create a `secrets.json` and `.env` file at the root of the repository. Information from those will come from Josh
+4. Now you're ready to run `yarn` from the terminal, this will take care of installing everything you need to run the project.
+5. Once that's done, run `yarn dev` and you'll be able to see the site at `localhost:3000`
+
 ## Setup
 
 Make sure to install the dependencies:
 
 ```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
 yarn install
-
-# bun
-bun install
 ```
 
 ## Development Server
@@ -25,17 +23,7 @@ bun install
 Start the development server on `http://localhost:3000`:
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
 yarn dev
-
-# bun
-bun run dev
 ```
 
 ## Production
@@ -43,33 +31,13 @@ bun run dev
 Build the application for production:
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
 yarn build
-
-# bun
-bun run build
 ```
 
 Locally preview production build:
 
 ```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
 yarn preview
-
-# bun
-bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

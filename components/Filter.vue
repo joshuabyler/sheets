@@ -7,6 +7,8 @@ const result = ref();
 const filterOption = ref();
 const leaOptions = ref();
 
+const column = ref('');
+
 const lookup = (key: string) => {
     console.log('search');
     console.log(key);
@@ -19,20 +21,17 @@ const showMedium = () => {
 };
 
 const reset = async () => {
-    await store.reset();
-    result.value = [...store.sheets.data.values];
-    result.value.splice(0, 1);
+    store.formatData();
 };
 
-const handleChange = (e: Event) => {
+const handleColumnChange = (e: string) => {
     console.log('handle change');
     console.log(e);
+    column.value = e;
 };
 
-const handleLeaChange = (e: Event) => {
-    console.log('handle lea change');
-    console.log(e);
-    store.filterData(e);
+const handleLeaChange = (e: string) => {
+    store.filterData({ column: column.value, value: e });
 };
 </script>
 
@@ -51,11 +50,15 @@ const handleLeaChange = (e: Event) => {
 
         <div class="filter__option">
             <span>Select</span>
-            <USelect v-model="filterOption" :options="store.filterOptions" @change="handleChange" />
+            <USelect
+                v-model="filterOption"
+                :options="store.filterOptions"
+                @change="handleColumnChange"
+            />
             <span>Where</span>
             <USelect
                 v-model="leaOptions"
-                :options="store.leaName"
+                :options="store[column.value]"
                 @change="handleLeaChange"
             ></USelect>
         </div>
