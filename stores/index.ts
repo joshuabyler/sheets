@@ -10,8 +10,8 @@ export const useStore = defineStore('main', () => {
     const enrollmentCap = ref([]);
     const filterOptions = ref();
     const formattedData = ref();
-    const gradeBands = ref([]);
-    const leaApprovalyear = ref([]);
+    const gradeBand = ref([]);
+    const leaApprovalYear = ref([]);
     const leaEnrollment = ref([]);
     const leaName = ref([]);
     const leaOffice = ref([]);
@@ -25,6 +25,7 @@ export const useStore = defineStore('main', () => {
     const visible = ref();
     const wards = ref([]);
     const website = ref([]);
+    const where = ref();
 
     const filterData = (item: object) => {
         formatData();
@@ -58,12 +59,11 @@ export const useStore = defineStore('main', () => {
 
         // might want to go through each header and list all of its options
         sheets.value.data.values.forEach((value: Array<never>) => {
-            console.log(value);
             leaName.value.push(value[0]);
             code.value.push(value[1]);
             wards.value.push(value[2]);
             levels.value.push(value[3]);
-            gradeBands.value.push(value[4]);
+            gradeBand.value.push(value[4]);
             siteType.value.push(value[5]);
             enrollmentCap.value.push(value[6]);
             leaEnrollment.value.push(value[7]);
@@ -75,7 +75,7 @@ export const useStore = defineStore('main', () => {
             leaEnrollment.value.push(value[13]);
             website.value.push(value[14]);
             leaOffice.value.push(value[15]);
-            leaApprovalyear.value.push(value[16]);
+            leaApprovalYear.value.push(value[16]);
             newLeader.value.push(value[17]);
             alternative.value.push(value[18]);
             residential.value.push(value[19]);
@@ -93,15 +93,39 @@ export const useStore = defineStore('main', () => {
         visible.value = sheets.value;
     };
 
+    const whereData = (column: Array<never>) => {
+        where.value = new Set(column);
+        where.value = [...where.value];
+    };
+
     return {
+        alternative,
+        code,
+        edEmail,
+        edName,
+        enrollmentCap,
         filterData,
         filterOptions,
         formattedData,
         formatData,
         getSheet,
+        gradeBand,
+        leaApprovalYear,
+        leaEnrollment,
         leaName,
+        leaOffice,
+        levels,
+        newLeader,
+        officeNumber,
+        residential,
         reset,
+        reviewRenewal,
         sheets,
-        visible
+        siteType,
+        visible,
+        wards,
+        website,
+        where,
+        whereData
     };
 });

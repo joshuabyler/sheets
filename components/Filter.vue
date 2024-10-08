@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useStore } from '@/stores';
+import { camalCase, columnNames } from '@/composables/useHelper';
+
 const store = useStore();
 const search = ref('');
-const result = ref();
 const filterOption = ref();
 const leaOptions = ref();
+const options = ref([]);
 
 const column = ref('');
 
@@ -15,23 +17,18 @@ const lookup = (key: string) => {
     console.log(search.value);
 };
 
-const showMedium = () => {
-    store.getMedium();
-    result.value = [...store.visible];
-};
-
-const reset = async () => {
+const reset = () => {
     store.formatData();
 };
 
 const handleColumnChange = (e: string) => {
-    console.log('handle change');
-    console.log(e);
-    column.value = e;
+    column.value = camalCase(e);
+    options.value = store[column.value];
+    store.whereData(store[column.value]);
 };
 
-const handleLeaChange = (e: string) => {
-    store.filterData({ column: column.value, value: e });
+const handleWhere = (e: string) => {
+    store.filterData({ column: columnNames[column.value], value: e });
 };
 </script>
 
@@ -45,7 +42,6 @@ const handleLeaChange = (e: string) => {
             @keyup="lookup"
             v-model="search"
         />
-        <UButton @click="showMedium">Medium</UButton>
         <UButton @click="reset">Reset</UButton>
 
         <div class="filter__option">
@@ -56,11 +52,7 @@ const handleLeaChange = (e: string) => {
                 @change="handleColumnChange"
             />
             <span>Where</span>
-            <USelect
-                v-model="leaOptions"
-                :options="store[column.value]"
-                @change="handleLeaChange"
-            ></USelect>
+            <USelect v-model="leaOptions" :options="store.where" @change="handleWhere"></USelect>
         </div>
     </div>
 </template>
